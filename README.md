@@ -15,7 +15,7 @@ With this extension, users will be able to:
 
 ### Wireframes
 
-![wireframes](http://res.cloudinary.com/dfmvfna21/image/upload/v1479712808/Chrome_Extension_en9zab.png)
+![wireframes](http://res.cloudinary.com/dfmvfna21/image/upload/v1479718413/Chrome_Extension_bykyqm.png)
 
 ### Technologies & Technical Challenges
 
@@ -57,6 +57,6 @@ The primary technical challenges will be:
 **Day 4**: Finish all the HTML and CSS for the extension. Create a page that teaches users how to read tabs that the extension links to. Any final debugging. By the end of the day:
 
 - Fully functioning extension that has adequate styling.
-- Page that teaches users how to read tabs. Also has adequate styling. 
+- Page that teaches users how to read tabs. Also has adequate styling.
 
 **Bonus**: Implement a tuner. Have a select to choose specific notes the user could use. Then when a button is pressed, it generates that tone for 10 seconds so a user can tune their guitar.
