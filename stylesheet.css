@@ -1,0 +1,115 @@
+html {
+  height: 215px;
+}
+
+body {
+  width: 150px;
+  height: 215px;
+  /*outline: 1px solid;*/
+  display: flex;
+  flex-direction: column;
+}
+
+div {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  height: 25px;
+}
+
+button {
+  color: white;
+  border-style: none;
+  border-radius: 5px;
+  background: linear-gradient(#e52d27, #b31217);
+  width: 60px;
+  font-size: 13px;
+  height: 25px;
+  border: none;
+  outline: none;
+}
+
+button:hover{
+  background: #b31217;
+}
+
+.all-button {
+  width: 100px;
+  align-self: center;
+  margin: 10px;
+}
+
+form {
+  margin: 5px 0 5px 0;
+  align-self: center;
+}
+
+.select-style {
+  padding: 0;
+  border: 1px solid #ccc;
+  width: 80px;
+  border-radius: 3px;
+  overflow: hidden;
+  background-color: #fff;
+  background: #fff;
+  position: relative;
+}
+
+.select-style:after {
+  top: 50%;
+  left: 80%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(0, 0, 0, 0);
+  border-top-color: #000000;
+  border-width: 5px;
+  margin-top: -2px;
+  z-index: 100;
+}
+
+.select-style select {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px 8px;
+  width: 100%;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  background-image: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+.select-style select:focus {
+    outline: none;
+}
+
+.tuning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 27px;
+}
+
+.tuning > button{
+  margin: 0;
+}
+
+label{
+  font-family: roboto;
+  align-self: center;
+  font-size: 14px
+}
+
+a {
+  margin: 10px;
+  font-family: roboto;
+  font-weight: 300;
+  align-self: center;
+  font-size: 12px;
+}
