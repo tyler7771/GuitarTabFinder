@@ -3,24 +3,29 @@
     <title>GuitarTabFinder</title>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+    <script type="application/javascript" src="lib/bundle.js"></script>
+    <script type="application/javascript" src="lib/jquery-3.1.1.min.js"></script>
   </head>
 
   <body>
-    <script type="application/javascript" src="lib/bundle.js"></script>
-    <script id="curentTab" type="application/javascript" src="lib/tab.js"></script>
 
     <div>
-      <button>Tab</button>
-      <button>Chords</button>
+      <button id="tab" >Tab</button>
+      <button id="chord" >Chords</button>
     </div>
     <div>
-      <button>Ukulele</button>
-      <button>Bass</button>
+      <button id="uke" >Ukulele</button>
+      <button id="bass" >Bass</button>
     </div>
-    <button class="all-button">All</button>
+    <button id="all" class="all-button">All</button>
 
     <form action="">
-    <label><input type="checkbox" name="vehicle" value="Bike">Title is before Artist</label>
+    <label><input id="checkbox" type="checkbox">Title is before Artist</label>
+    </form>
+
+    <form action="">
+      <label>Artist: <input id="artist-name" type="text"></label>
+      <label>Title: &nbsp <input id="title-name" type="text"></label>
     </form>
 
     <div class="tuning">
@@ -38,6 +43,6 @@
       <button class="tune-button">Tune</button>
     </div>
 
-    <a href="https://www.ultimate-guitar.com/lessons/for_beginners/how_to_read_tabs.html">How to read tabs</a>
+    <a href="" id="link">How to read tabs</a>
   </body>
 </html>

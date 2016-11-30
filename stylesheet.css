@@ -1,10 +1,10 @@
 html {
-  height: 215px;
+  height: 262px;
 }
 
 body {
   width: 150px;
-  height: 215px;
+  height: 262px;
   /*outline: 1px solid;*/
   display: flex;
   flex-direction: column;
@@ -37,6 +37,10 @@ button:hover{
   width: 100px;
   align-self: center;
   margin: 10px;
+}
+
+#artist-name, #title-name {
+  width: 100px;
 }
 
 form {
