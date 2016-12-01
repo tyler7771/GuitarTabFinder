@@ -6,7 +6,7 @@ As a guitar player, sometimes when you're listening to a song, you just have to 
 
 ## Features & Implementation
 
-The game is made using JavaScript. It makes requests to both Youtube's API and ultimate-guitar.com to provide information for the user to work with to search for the tab they're looking for in the easiest way possible. It can direct user's to guitar tabs, guitar chord sheets, bass tabs, ukulele chord sheets, and all the options for a given artist. Just go to a video, and click a button and you have your tab!
+The extension is made using JavaScript. It makes requests to both Youtube's API and ultimate-guitar.com to provide information for the user to work with to search for the tab they're looking for in the easiest way possible. It can direct user's to guitar tabs, guitar chord sheets, bass tabs, ukulele chord sheets, and all the options for a given artist. Just go to a video, and click a button and you have your tab!
 
 ![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1479496472/Screen_Shot_2016-11-18_at_11.12.51_AM_mpvrwg.png)
 
@@ -53,62 +53,45 @@ getTitle(info) {
 
 There are also cases in which the song title is listed before the artist. In this case a check box has been given to switch the artist and song title. When checked, the artist and song title variables are switched.
 
+### Finding Tabs
 
-### Game Over
+Once the information on the video is found, 5 ajax requests are made to find what options for tabs are made. Based on the information that is received from the request the button is either active or disabled. This gives the user a visual of what's available for them.
 
-When the user collides the ship with an asteroid there is an explosion and a game over page is rendered.
+![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1480566118/Screen_Shot_2016-11-30_at_8.20.40_PM_snfad3.png)
 
-![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1479496490/Screen_Shot_2016-11-18_at_10.53.18_AM_owrekt.png)
-
-On every frame step there is a check for a crash. If there is a crash it returns true and the game over sequence run. If there's no crash, the game continues to run until there is one.
+`buttonStatus` iterates through all the button options, creates a url, and sends an ajax request to each option to check if tab exists.
 
 ```js
-step(time) {
-  this.moveObjects(time);
-  const crash = this.checkCrash();
+buttonStatus() {
+  const buttons = ["tab", "chord", "uke", "bass", "all"];
 
-  if (crash) {
-    this.crash = true;
-  } else {
-    this.addObstacle();
-    this.removeObstacle();
-    if (this.playing) {
-      this.score += 1;
+  for (let i = 0; i < buttons.length; i++) {
+    // if either the artist or title isn't defined buttons are inactive
+    if (buttons[i] !== "all" &&
+      (this.artist === "" ||
+      this.title === "")) {
+      this.inactiveButton(buttons[i]);
+    // if the title isn't defined all button is inactive
+    } else if (buttons[i] === "all" && this.artist === ""){
+      this.inactiveButton(buttons[i]);
+    // ajax request to see if the option is available
+    } else {
+      let url = new Url(buttons[i], this.artist, this.title);
+      url = url.url;
+      $.ajax({
+        url: url,
+        type: 'get',
+        // Success if tab is available
+        success: () => this.buttonEvent(buttons[i]),
+        // Error if url returns 404 meaning no tab is available
+        error: () => this.inactiveButton(buttons[i])
+      });
     }
   }
-}
 ```
 
-The checkCrash method looks at the the position of the ship and each obstacle on the screen and checks if the positions of the two items would be a crash.
-```js
-checkCrash() {
-  const ship = this.ship[0];
-  let returnValue = false;
 
-  this.obstacles.forEach((obstacle) => {
-    // The obstacle is range of where the ship is
-    if (obstacle.pos[0] > 249 && obstacle.pos[0] < 398) {
-      // Ship hits the obstacle in the middle
-      if (ship.pos[1] > obstacle.pos[1]
-        && (ship.pos[1] + 100) < (obstacle.pos[1] + 150)) {
-          returnValue = true;
-      // Ship hits the obstacle with on the bottom
-      } else if ((ship.pos[1] < obstacle.pos[1])
-        && (ship.pos[1] + 70) > (obstacle.pos[1])) {
-          returnValue = true;
-      // Ship hits the obstacle with the top
-      } else if ((ship.pos[1] < (obstacle.pos[1] + 120))
-        && (ship.pos[1] + 100) > (obstacle.pos[1] + 150)) {
-          returnValue = true;
-      }
-      // Ship hits the top or bottom of the screen
-    } else if (ship.pos[1] <= -25 || ship.pos[1] >= 425){
-      returnValue = true;
-    }
-  });
-  return returnValue;
-}
-```
+
 
 ## Future Additions to the Site
 
