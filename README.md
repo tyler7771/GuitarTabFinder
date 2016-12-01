@@ -1,62 +1,163 @@
-## Guitar Tab Finder
+# Never Tell Me the Odds! <img src="images/icon48" width="50px" height="50px" />
 
-### Background
+[Download Site](https://tyler7771.github.io/NeverTellMeTheOdds/)
 
-As a guitar player, I'm always listening to music wondering if I'd be able to play that cool guitar line in every song. When watching videos on youtube I often find that I want to learn that particular song that I've been listening to on repeat for the past 5 days, enter Guitar Tab Finder. This Chrome extension will take the youtube video that the user is listening to and find the guitar tab for the song. It will automatically find the tab and open it in a new tab for ease of learning songs!
+Sometimes 
 
-### Functionality & MVP
+## Features & Implementation
 
-With this extension, users will be able to:
+The game is made using vanilla JavaScript. It tracks the score over the course of the game and store's the user's high score for the life of the window. As the user's score gets higher the astroids travel faster towards the ship making the game more difficult.
 
-- [ ] Find tabs for a song they're listening to on youtube
-- [ ] Users have the ability to search for chord charts, tab charts, or a list of all tabs that match the song
-- [ ] Learn how to read guitar tabs
-- [ ] Open search results in a new tab
+![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1479496472/Screen_Shot_2016-11-18_at_11.12.51_AM_mpvrwg.png)
 
-### Wireframes
+#### Ship movement
 
-![wireframes](http://res.cloudinary.com/dfmvfna21/image/upload/v1479718413/Chrome_Extension_bykyqm.png)
+I use a sprite to animate the ship back and forth as the user plays the game. The animation is done through tracking the animation point of the ship and on the next frame rendering incrementing the frame position to render a new position of the ship. The portion of the code that does that looks like this:
 
-### Technologies & Technical Challenges
 
-The extension will use: Javascript, HTML, and CSS. It will also utilize the Youtube's API to grab the video's title. It will use two files `find_title.js` and `searching.js`.
+The frame index and tick count are how I find the position of the ship that I want. They're stored as instance variables so they aren't erased on every render call.
+```js
+constructor() {
+  // The portion of the sprite needed currently
+  this.frameIndex = 0;
+  // How many frames it's been rendered
+  this.tickCount = 0;
+}
+```
+The draw method creates a sprite instance, updates the sprite position based on the frame index and tick count and then renders the ship.
+```js
+draw(context) {
+  const imgSprite = this.sprite({
+    context: context,
+    width: 3000,
+    height: 100,
+    image: img,
+    numberOfFrames: 30,
+    ticksPerFrame: 3
+  });
 
-- `find_title.js`: will contain the logic for finding the title of the video and parsing it for only the information needed.
-- `searching.js`: will contain the logic creating the url needed for finding the tab based on the information received from `find_title.js` and options from user.
+  imgSprite.update();
+  imgSprite.render();
+}
+```
 
-There will also be 2 HTML files to display the content:
+The sprite function takes the logic given to it by the draw function and returns the image of the ship that's needed.
 
-- `options.html`: the file that will display the options for the user.
-- `styling.css`: the file containing all the styling for the extension.
+```js
+sprite(options) {
+  let that = {},
+    ticksPerFrame = options.ticksPerFrame || 0,
+    numberOfFrames = options.numberOfFrames || 1;
 
-The primary technical challenges will be:
+  that.context = options.context;
+  that.width = options.width;
+  that.height = options.height;
+  that.image = options.image;
 
-- Find the youtube video's title and then parsing it to grab only the information that I want from the title.
-- Error handling. The site I plan on using for displaying tabs only displays a page that says nothing's there. There is not redirect so figuring out how to handle when no tabs exist will be a challenge.
-- Most songs on youtube, the artist title is before the song title. Although, I've found some cases where they're flipped. Handling that in a way that's good for the user will be a challenge.
+  // Updates the tickCount and frameIndex(if needed)
+  that.update = function () {
+    this.tickCount += 1;
+    if (this.tickCount > ticksPerFrame) {
+      this.tickCount = 0;
+      if (this.frameIndex < numberOfFrames - 1) {
+        this.frameIndex += 1;
+      } else {
+        this.frameIndex = 0;
+      }
+    }
+  }.bind(this);
 
-### Implementation Timeline
+  // Takes all the information given and finds the portion of the sprite needed currently
+  that.render = function () {
+    that.context.drawImage(
+      // The sprite itself
+      that.image,
+      // Horizontal position in the sprite
+      this.frameIndex * that.width / numberOfFrames,
+      // Vertical position in the sprite
+      0,
+      // Height and width of the image on the sprite
+      that.width / numberOfFrames,
+      that.height,
+      // Position on the canvas where it's drawn
+      this.pos[0],
+      this.pos[1],
+      // Height and width of the image returned
+      that.width / numberOfFrames,
+      that.height);
+  }.bind(this);
+  return that;
+}
+```
 
-**Day 1**: Get started on the infrastructure of the extension, following <a href="https://developer.chrome.com/extensions/getstarted">this guide</a> from Chrome.  By the end of the day, I will have:
+### Game Over
 
-- A completed `package.json`
-- A completed `manifest.json`
-- The ability to locate a video's title.
+When the user collides the ship with an asteroid there is an explosion and a game over page is rendered.
 
-**Day 2**: Work on parsing video's title, and return the specific url I'd like based on the type of search the user would like. By the end of the day I'd like to be able to:
+![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1479496490/Screen_Shot_2016-11-18_at_10.53.18_AM_owrekt.png)
 
-- Separate artist from song title
-- Remove any extra information not wanted
-- Get a url returned based on the button selected.
+On every frame step there is a check for a crash. If there is a crash it returns true and the game over sequence run. If there's no crash, the game continues to run until there is one.
 
-**Day 3**: Dedicate this day to learning how to open new tabs in chrome and navigate to a specified url. Figure out error handling. By the end of the day I'd like to be able to:
+```js
+step(time) {
+  this.moveObjects(time);
+  const crash = this.checkCrash();
 
-- Open a new tab on each button click.
-- Figure out a way to handle if no tab exists for that specific song.
+  if (crash) {
+    this.crash = true;
+  } else {
+    this.addObstacle();
+    this.removeObstacle();
+    if (this.playing) {
+      this.score += 1;
+    }
+  }
+}
+```
 
-**Day 4**: Finish all the HTML and CSS for the extension. Create a page that teaches users how to read tabs that the extension links to. Any final debugging. By the end of the day:
+The checkCrash method looks at the the position of the ship and each obstacle on the screen and checks if the positions of the two items would be a crash.
+```js
+checkCrash() {
+  const ship = this.ship[0];
+  let returnValue = false;
 
-- Fully functioning extension that has adequate styling.
-- Page that teaches users how to read tabs. Also has adequate styling.
+  this.obstacles.forEach((obstacle) => {
+    // The obstacle is range of where the ship is
+    if (obstacle.pos[0] > 249 && obstacle.pos[0] < 398) {
+      // Ship hits the obstacle in the middle
+      if (ship.pos[1] > obstacle.pos[1]
+        && (ship.pos[1] + 100) < (obstacle.pos[1] + 150)) {
+          returnValue = true;
+      // Ship hits the obstacle with on the bottom
+      } else if ((ship.pos[1] < obstacle.pos[1])
+        && (ship.pos[1] + 70) > (obstacle.pos[1])) {
+          returnValue = true;
+      // Ship hits the obstacle with the top
+      } else if ((ship.pos[1] < (obstacle.pos[1] + 120))
+        && (ship.pos[1] + 100) > (obstacle.pos[1] + 150)) {
+          returnValue = true;
+      }
+      // Ship hits the top or bottom of the screen
+    } else if (ship.pos[1] <= -25 || ship.pos[1] >= 425){
+      returnValue = true;
+    }
+  });
+  return returnValue;
+}
+```
 
-**Bonus**: Implement a tuner. Have a select to choose specific notes the user could use. Then when a button is pressed, it generates that tone for 10 seconds so a user can tune their guitar.
+## Future Additions to the Site
+
+I had an absolute blast making this game and would love to keep adding on to it!
+
+### Different Ships and Planets
+
+I'd love to add other ships and planets from the Star Wars universe to allow users to choose the ship they want to fly and where they want to fly it.
+
+### Gravity changing
+
+Add a feature that allows users to choose the gravity of the game. If they find it too hard make the ship down slower, or if they find it too easy make the ship go down faster.
+
+### Custom backgrounds
+
+Allow users to upload their own custom backgrounds by utilizing cloudinary's upload widget so they can fly their favorite ships anywhere they want!
