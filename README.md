@@ -8,9 +8,9 @@ As a guitar player, sometimes when you're listening to a song, you just have to 
 
 The extension is made using JavaScript. It makes requests to both Youtube's API and ultimate-guitar.com to provide information for the user to work with to search for the tab they're looking for in the easiest way possible. It can direct user's to guitar tabs, guitar chord sheets, bass tabs, ukulele chord sheets, and all the options for a given artist. Just go to a video, and click a button and you have your tab!
 
-![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1479496472/Screen_Shot_2016-11-18_at_11.12.51_AM_mpvrwg.png)
+![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1480577641/exampleGif_pbhfsu.gif)
 
-#### Find video information
+### Find video information
 
 I used jQuery to make a call to Youtube's API to get the information for the video a user is currently watching. This returns the video's title in the form of a string. I then have 2 functions (`getArtist` and `getTitle`) that parse this string and give me the artist and the song title.
 
@@ -88,12 +88,10 @@ buttonStatus() {
       });
     }
   }
+}
 ```
 
-
-
-
-## Future Additions to the Site
+### Future Additions to the Site
 
 I had an absolute blast making this game and would love to keep adding on to it!
 
