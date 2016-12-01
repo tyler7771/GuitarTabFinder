@@ -33,6 +33,14 @@ button:hover{
   background: #b31217;
 }
 
+button:active{
+  background: black;
+}
+
+button:disabled{
+  background: #DCDCDC;
+}
+
 .all-button {
   width: 100px;
   align-self: center;
