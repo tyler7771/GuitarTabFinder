@@ -1,8 +1,8 @@
-# Never Tell Me the Odds! <img src="images/icon48" width="50px" height="50px" />
+# Guitar Tab Finder <img src="http://res.cloudinary.com/dfmvfna21/image/upload/v1480552250/icon48_zluiyo.png" width="50px" height="50px" />
 
 [Download Site](https://tyler7771.github.io/NeverTellMeTheOdds/)
 
-Sometimes 
+Sometimes
 
 ## Features & Implementation
 
