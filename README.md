@@ -1,8 +1,8 @@
 # Guitar Tab Finder <img src="http://res.cloudinary.com/dfmvfna21/image/upload/v1480552250/icon48_zluiyo.png" width="50px" height="50px" />
 
-[Download Site](https://tyler7771.github.io/NeverTellMeTheOdds/)
+[Download Site](https://tyler7771.github.io/NeverTellMeTheOdds/){:target="_blank"}
 
-Sometimes
+As a guitar player, sometimes when you're listening to a song, you just have to learn how to play it! You begin the process of going to ultimate-guitar and then searching for the song and it can be a pain. Guitar Tab Finder automates this process for you! This chrome extension grabs the video's
 
 ## Features & Implementation
 
