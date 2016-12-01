@@ -1,6 +1,6 @@
 # Guitar Tab Finder <img src="http://res.cloudinary.com/dfmvfna21/image/upload/v1480552250/icon48_zluiyo.png" width="50px" height="50px" />
 
-[Download Site](https://tyler7771.github.io/NeverTellMeTheOdds/)
+[Download Site](https://chrome.google.com/webstore/detail/guitartabfinder/dlelcgdgpoffihbnfgamnbkhdofabamg/)
 
 As a guitar player, sometimes when you're listening to a song, you just have to learn how to play it! You begin the process of going to ultimate-guitar and then searching for the song and it can be a pain. Guitar Tab Finder automates this process for you! This chrome extension grabs the video's title, prefills the artist and song title, then searches to see what options are available for the given information. There is also a tuner implemented that generates the tones for each note in a guitar's standard tuning for ease of tuning.
 
