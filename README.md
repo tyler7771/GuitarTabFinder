@@ -1,94 +1,55 @@
 # Guitar Tab Finder <img src="http://res.cloudinary.com/dfmvfna21/image/upload/v1480552250/icon48_zluiyo.png" width="50px" height="50px" />
 
-<a href="https://tyler7771.github.io/NeverTellMeTheOdds/" target="blank">Download Site</a>
+[Download Site](https://tyler7771.github.io/NeverTellMeTheOdds/)
 
-As a guitar player, sometimes when you're listening to a song, you just have to learn how to play it! You begin the process of going to ultimate-guitar and then searching for the song and it can be a pain. Guitar Tab Finder automates this process for you! This chrome extension grabs the video's
+As a guitar player, sometimes when you're listening to a song, you just have to learn how to play it! You begin the process of going to ultimate-guitar and then searching for the song and it can be a pain. Guitar Tab Finder automates this process for you! This chrome extension grabs the video's title, prefills the artist and song title, then searches to see what options are available for the given information. There is also a tuner implemented that generates the tones for each note in a guitar's standard tuning for ease of tuning.
 
 ## Features & Implementation
 
-The game is made using vanilla JavaScript. It tracks the score over the course of the game and store's the user's high score for the life of the window. As the user's score gets higher the astroids travel faster towards the ship making the game more difficult.
+The game is made using JavaScript. It makes requests to both Youtube's API and ultimate-guitar.com to provide information for the user to work with to search for the tab they're looking for in the easiest way possible. It can direct user's to guitar tabs, guitar chord sheets, bass tabs, ukulele chord sheets, and all the options for a given artist. Just go to a video, and click a button and you have your tab!
 
 ![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1479496472/Screen_Shot_2016-11-18_at_11.12.51_AM_mpvrwg.png)
 
-#### Ship movement
+#### Find video information
 
-I use a sprite to animate the ship back and forth as the user plays the game. The animation is done through tracking the animation point of the ship and on the next frame rendering incrementing the frame position to render a new position of the ship. The portion of the code that does that looks like this:
+I used jQuery to make a call to Youtube's API to get the information for the video a user is currently watching. This returns the video's title in the form of a string. I then have 2 functions (`getArtist` and `getTitle`) that parse this string and give me the artist and the song title.
 
+For 99.9% of videos for a song, a dash separates the artist and the song title. `getArtist` takes the string received from the ajax request and separates the artist from the song title on the dash. It's then stored as an instance variable and updates the text input for the user to update it if necessary.
 
-The frame index and tick count are how I find the position of the ship that I want. They're stored as instance variables so they aren't erased on every render call.
 ```js
-constructor() {
-  // The portion of the sprite needed currently
-  this.frameIndex = 0;
-  // How many frames it's been rendered
-  this.tickCount = 0;
-}
-```
-The draw method creates a sprite instance, updates the sprite position based on the frame index and tick count and then renders the ship.
-```js
-draw(context) {
-  const imgSprite = this.sprite({
-    context: context,
-    width: 3000,
-    height: 100,
-    image: img,
-    numberOfFrames: 30,
-    ticksPerFrame: 3
-  });
-
-  imgSprite.update();
-  imgSprite.render();
+getArtist(info) {
+  // Separates the artist from the song title and then stores as an instance variable.
+  this.artist = info.split(" - ")[0];
+  // Finds the text field and fills with the instance variable that was just stored.
+  let artistName = document.getElementById("artist-name");
+  artistName.value = this.artist;
 }
 ```
 
-The sprite function takes the logic given to it by the draw function and returns the image of the ship that's needed.
+Song titles were a little more complicated. The song title side of the split often has a lot of unnecessary information such as `(Offical Video)` or `(Live)` that we don't want. There's also the possibility that the song title can be in quotes which we also don't want. I solved this problem by using regular expressions to grab only the portions of the song half that I want and then, like the artist, store it as an instance variable and update the text input.
 
 ```js
-sprite(options) {
-  let that = {},
-    ticksPerFrame = options.ticksPerFrame || 0,
-    numberOfFrames = options.numberOfFrames || 1;
-
-  that.context = options.context;
-  that.width = options.width;
-  that.height = options.height;
-  that.image = options.image;
-
-  // Updates the tickCount and frameIndex(if needed)
-  that.update = function () {
-    this.tickCount += 1;
-    if (this.tickCount > ticksPerFrame) {
-      this.tickCount = 0;
-      if (this.frameIndex < numberOfFrames - 1) {
-        this.frameIndex += 1;
-      } else {
-        this.frameIndex = 0;
-      }
-    }
-  }.bind(this);
-
-  // Takes all the information given and finds the portion of the sprite needed currently
-  that.render = function () {
-    that.context.drawImage(
-      // The sprite itself
-      that.image,
-      // Horizontal position in the sprite
-      this.frameIndex * that.width / numberOfFrames,
-      // Vertical position in the sprite
-      0,
-      // Height and width of the image on the sprite
-      that.width / numberOfFrames,
-      that.height,
-      // Position on the canvas where it's drawn
-      this.pos[0],
-      this.pos[1],
-      // Height and width of the image returned
-      that.width / numberOfFrames,
-      that.height);
-  }.bind(this);
-  return that;
+getTitle(info) {
+  // Store the second half of the video title as a variable
+  const infoSplit = info.split(" - ")[1];
+    // Check and see if the song title is undefined for a button status check
+  if (infoSplit === undefined) {
+    this.buttonStatus();
+    // Check to see if the video is in quotes
+  } else if (infoSplit[0] === '"'){
+    // Only grabs the text that's after a full quote until something that's not a letter, number, space, apostrophe, or period (or a second full quote).
+    this.title = info.split(/^[^\"]*\"([a-z0-9\ \-\'\.]{1,})/i)[1];
+  } else {
+    // Only grabs the text that's after a full dash until something that's not a letter, number, space, apostrophe, or period. This will give us a string with spaces at the beginning and the end ex. " example ". Trim gets rid of these spaces.
+    this.title = info.split(/^[^\-]*\-([a-z0-9\ \-\'\.]{1,})/i)[1].trim();
+  }
+  let titleName = document.getElementById("title-name");
+  titleName.value = this.title;
 }
 ```
+
+There are also cases in which the song title is listed before the artist. In this case a check box has been given to switch the artist and song title. When checked, the artist and song title variables are switched.
+
 
 ### Game Over
 
