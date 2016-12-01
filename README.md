@@ -57,7 +57,7 @@ There are also cases in which the song title is listed before the artist. In thi
 
 Once the information on the video is found, 5 ajax requests are made to find what options for tabs are made. Based on the information that is received from the request the button is either active or disabled. This gives the user a visual of what's available for them.
 
-![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1480566118/Screen_Shot_2016-11-30_at_8.20.40_PM_snfad3.png)
+![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1480578840/Screen_Shot_2016-11-30_at_8.20.40_PM_cijqem.png)
 
 `buttonStatus` iterates through all the button options, creates a url, and sends an ajax request to each option to check if tab exists.
 
@@ -91,18 +91,8 @@ buttonStatus() {
 }
 ```
 
-### Future Additions to the Site
+### Tuner
 
-I had an absolute blast making this game and would love to keep adding on to it!
+Sometimes when beginning to learn a song you realize your guitar is out of tune. You have to then find a tuner online which is a pain time after time. That's why a standard tuner was implemented in the extension. User's select the note from the dropdown and press the tune button. The tone is then played for 3 seconds so the user can tune.
 
-### Different Ships and Planets
-
-I'd love to add other ships and planets from the Star Wars universe to allow users to choose the ship they want to fly and where they want to fly it.
-
-### Gravity changing
-
-Add a feature that allows users to choose the gravity of the game. If they find it too hard make the ship down slower, or if they find it too easy make the ship go down faster.
-
-### Custom backgrounds
-
-Allow users to upload their own custom backgrounds by utilizing cloudinary's upload widget so they can fly their favorite ships anywhere they want!
+![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1480578840/Screen_Shot_2016-11-30_at_11.52.06_PM_cujap4.png)
