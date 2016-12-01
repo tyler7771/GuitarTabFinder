@@ -37,10 +37,12 @@ getTitle(info) {
     this.buttonStatus();
     // Check to see if the video is in quotes
   } else if (infoSplit[0] === '"'){
-    // Only grabs the text that's after a full quote until something that's not a letter, number, space, apostrophe, or period (or a second full quote).
+    // Only grabs the text that's after a full quote until something that's not a letter, number, space,
+    //  apostrophe, or period (or a second full quote).
     this.title = info.split(/^[^\"]*\"([a-z0-9\ \-\'\.]{1,})/i)[1];
   } else {
-    // Only grabs the text that's after a full dash until something that's not a letter, number, space, apostrophe, or period. This will give us a string with spaces at the beginning and the end ex. " example ". Trim gets rid of these spaces.
+    // Only grabs the text that's after a full dash until something that's not a letter, number, space,
+    //  apostrophe, or period. This will give us a string with spaces at the beginning and the end ex. " example ". Trim gets rid of these spaces.
     this.title = info.split(/^[^\-]*\-([a-z0-9\ \-\'\.]{1,})/i)[1].trim();
   }
   let titleName = document.getElementById("title-name");
