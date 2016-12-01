@@ -8,7 +8,7 @@ As a guitar player, sometimes when you're listening to a song, you just have to 
 
 The extension is made using JavaScript. It makes requests to both Youtube's API and ultimate-guitar.com to provide information for the user to work with to search for the tab they're looking for in the easiest way possible. It can direct user's to guitar tabs, guitar chord sheets, bass tabs, ukulele chord sheets, and all the options for a given artist. Just go to a video, and click a button and you have your tab!
 
-![Alt text](http://res.cloudinary.com/dfmvfna21/image/upload/v1480577641/exampleGif_pbhfsu.gif)
+<img src="http://res.cloudinary.com/dfmvfna21/image/upload/v1480577641/exampleGif_pbhfsu.gif" width="500px" />
 
 ### Find video information
 
