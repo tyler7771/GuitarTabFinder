@@ -7,42 +7,72 @@
     <script type="application/javascript" src="lib/bundle.js"></script>
   </head>
 
-  <body>
+  <body id="body">
+    <div class = "body">
+      <div id="directions">
+        <img id="close-directions" src="http://res.cloudinary.com/dfmvfna21/image/upload/v1480977288/close-button_oybgtm.png"/>
+        <div class="direction-buttons">
+          <button>Tab</button>
+        </div>
+        <p class="choice-text">
+          Choice found if red.
+        </p>
 
-    <div>
-      <button id="tab" >Tab</button>
-      <button id="chord" >Chords</button>
+        <p>
+          Check if formated<br/>"Song Title - Artist"
+        </p>
+        <img class="arrow" src="http://res.cloudinary.com/dfmvfna21/image/upload/v1481157178/red-arrow-11_u3lxs3.png" />
+        <span class="no-options">No choices found?</span>
+        <p class="edit-text">
+          Try editing artist or title
+        </p>
+        <span class="tune-directions">Need to tune?</span>
+        <p class="tune-text">
+          Choose a tone and<br />click tune
+        </p>
+      </div>
+
+      <div class="app">
+        <div>
+          <button id="tab" >Tab</button>
+          <button id="chord" >Chords</button>
+        </div>
+        <div>
+          <button id="uke" >Ukulele</button>
+          <button id="bass" >Bass</button>
+        </div>
+        <button id="all" class="all-button">All</button>
+
+        <form action="">
+          <label><input id="checkbox" type="checkbox">Title is before Artist</label>
+        </form>
+
+        <form action="">
+          <label>Artist: <input id="artist-name" type="text"></label>
+          <label>Title: &nbsp <input id="title-name" type="text"></label>
+        </form>
+
+        <div class="tuning">
+          <form class="select-style">
+            <select id="tuner">
+              <option value="">Tone</option>
+              <option value="E">E</option>
+              <option value="A">A</option>
+              <option value="D">D</option>
+              <option value="G">G</option>
+              <option value="B">B</option>
+              <option value="e">e</option>
+            </select>
+          </form>
+          <button id="tune-button" class="tune-button">Tune</button>
+        </div>
+
+        <img id="info" src="http://res.cloudinary.com/dfmvfna21/image/upload/v1480966858/About-icon_y1ppwi.png"/>
+      </div>
     </div>
-    <div>
-      <button id="uke" >Ukulele</button>
-      <button id="bass" >Bass</button>
-    </div>
-    <button id="all" class="all-button">All</button>
-
-    <form action="">
-    <label><input id="checkbox" type="checkbox">Title is before Artist</label>
-    </form>
-
-    <form action="">
-      <label>Artist: <input id="artist-name" type="text"></label>
-      <label>Title: &nbsp <input id="title-name" type="text"></label>
-    </form>
-
-    <div class="tuning">
-      <form class="select-style">
-        <select id="tuner">
-          <option value="">Tone</option>
-          <option value="E">E</option>
-          <option value="A">A</option>
-          <option value="D">D</option>
-          <option value="G">G</option>
-          <option value="B">B</option>
-          <option value="e">e</option>
-        </select>
-      </form>
-      <button id="tune-button" class="tune-button">Tune</button>
-    </div>
-
-    <a href="" id="link">How to read tabs</a>
+    <footer id="footer">
+      <a href="" id="link">How to read tabs</a>
+      <a href="" id="sample">Need inspiration? Try this video!</a>
+    </footer>
   </body>
 </html>
